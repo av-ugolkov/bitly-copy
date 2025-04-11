@@ -1,0 +1,10 @@
+template: testify
+packages:
+  github.com/av-ugolkov/bitly-copy/internal/service:
+    config:
+      dir: "{{.InterfaceDir}}"
+      filename: "mocks_{{.InterfaceName}}_test.go"
+      pkgname: "service"
+      structname: "Mock{{.InterfaceName}}"
+    interfaces:
+      db:

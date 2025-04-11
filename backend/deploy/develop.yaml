@@ -1,0 +1,35 @@
+services:
+  redis:
+    container_name: redis-base
+    image: redis:7.4.2-alpine
+    expose:
+      - '6379'
+    ports:
+      - '6379:6379'
+    networks:
+      - bitly
+    entrypoint:
+      - '/bin/sh'
+      - '-ecx'
+      - 'redis-server'
+
+  service:
+    container_name: bitly-copy
+    image: bitly:0.0.1
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    depends_on:
+      - redis
+    networks:
+      - bitly
+
+networks:
+  bitly:
+    name: bitly
