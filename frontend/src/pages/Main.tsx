@@ -21,6 +21,7 @@ export default function Main() {
       },
     });
     if (!resp.ok) {
+      setShortLink(resp.statusText);
       console.log(resp);
       return;
     }

@@ -21,7 +21,6 @@ export default function Statistics() {
     }
 
     const data = await resp.json();
-    console.log(data);
     setCountRedirects(data['statistics']);
   }
 

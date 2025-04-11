@@ -64,9 +64,13 @@ func (s *Service) Add(ctx context.Context, uid, url, aliase string) (string, err
 	success, count := false, 0
 	for !success && count < CountRetryGenShortUrl {
 		success, err = s.db.SetNX(ctx, shortUrl, url)
-		if !success && shortUrl != aliase {
-			shortUrl = urlTool.GenShortURL(url)
-			count++
+		if !success {
+			if shortUrl != aliase {
+				shortUrl = urlTool.GenShortURL(url)
+				count++
+			} else {
+				return "", ErrUrlExists
+			}
 		}
 	}
 	if err != nil {
